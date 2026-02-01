@@ -76,21 +76,21 @@ Let's try these values against the live server.
 
 **Command:**
 
-nc localhost 1337
+```nc localhost 1337```
 
 **Our Input:**
 Enter max nodes to allocate: 10
 Enter target depth: 6
 
 **The Result:**
-
+```
 [+] Initializing Memory Manager...
 
 [!] CRITICAL ALERT: MEMORY BOUNDARY VIOLATION
 [+] PRIVILEGE ESCALATION SUCCESSFUL.
 [+] FLAG: LNMHACKS{W3lc0me_t0_Lnm1it}
 
-
+```
 It worked! The system detected the boundary violation. Instead of safely shutting down, the legacy error handler defaulted to a debug mode or "fail open" state, granting us administrative privileges and printing the flag.
 
 
@@ -106,10 +106,10 @@ In real applications, developers often assume users will provide logical inputs 
 If you want to try this challenge locally or host it for your friends, you can use Docker.
 
 **1. Build the Image**
-   docker build -t lnmhacks/logic_challenge .
+ ```  docker build -t lnmhacks/logic_challenge .```
 
 **2. Run the Container**
-   docker run -d -p 1337:5010 lnmhacks/logic_challenge
+ ```  docker run -d -p 1337:5010 lnmhacks/logic_challenge```
 
 **3. Connect**
-   nc localhost 1337
+```   nc localhost 1337 ```
