@@ -45,7 +45,7 @@ How much memory (nodes) we want to reserve.
 
 How deep the tree structure should be.
 
-Step 2: Identifying the Vulnerability
+### Step 2: Identifying the Vulnerability
 The warning message gives us a massive hint: "System uses a sparse-tree algorithm."
 
 In computer science, a binary tree grows exponentially. The number of nodes required is related to the depth by the formula:
@@ -62,7 +62,7 @@ The Flaw: The program allows us to input any number for "Max nodes" and any numb
 If we ask for a deep tree but only give it a tiny amount of memory, we might trigger a Resource Exhaustion or Boundary Violation error.
 
 
-Step 3: The Exploit Strategy
+### Step 3: The Exploit Strategy
 To exploit this, we will perform a "starvation attack." We will lie to the system:
 
 We will allocate a very small amount of memory (e.g., 10 nodes).
@@ -72,7 +72,7 @@ We will demand a complex operation (e.g., Depth 6, which requires ~64 nodes).
 The system will try to initialize the tree, realize it has run out of allocated memory, and hopefully crash in an insecure way (Fail Open).
 
 
-Step 4: Execution
+### Step 4: Execution
 Let's try these values against the live server.
 
 Command:
@@ -93,7 +93,7 @@ The Result:
 It worked! The system detected the boundary violation. Instead of safely shutting down, the legacy error handler defaulted to a debug mode or "fail open" state, granting us administrative privileges and printing the flag.
 
 
-Why This Matters
+### Why This Matters
 This challenge simulates a common class of real-world bugs known as Business Logic Errors.
 
 In real applications, developers often assume users will provide logical inputs (e.g., "If they need 64 nodes, surely they will allocate 64 nodes"). Hackers exploit this trust by providing mathematically impossible or contradictory inputs to force the application into an undefined state.
@@ -101,7 +101,7 @@ In real applications, developers often assume users will provide logical inputs 
 Key Takeaway: Always validate that user inputs are consistent with each other before processing them!
 
 
-How to Host This Challenge
+**How to Host This Challenge**
 If you want to try this challenge locally or host it for your friends, you can use Docker.
 
 1. Build the Image
