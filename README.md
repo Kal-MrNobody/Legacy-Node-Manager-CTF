@@ -2,7 +2,6 @@
 
 ## A deep dive into the "Legacy Node Manager" Challenge
 
-**Author:** Khushal Shadija
 **Category:** Pwn / Logic Exploitation
 **Difficulty:** Beginner
 
@@ -32,7 +31,7 @@ The first step in any CTF challenge is to run the program and see how it behaves
 ```bash
 nc localhost 1337
 ```
-Output:
+**Output:**
 --- LEGACY NODE MANAGER v1.0 (DEPRECATED) ---
 WARNING: System uses a sparse-tree algorithm to save memory.
 ------------------------------------------
@@ -57,7 +56,7 @@ If we request a Depth of 2, we need about 2^2 = 4 nodes.
 
 If we request a Depth of 6, we need about 2^6 = 64 nodes.
 
-The Flaw: The program allows us to input any number for "Max nodes" and any number for "Target depth" independently. It does not seem to check if the Max nodes we allocated are actually enough to hold the Target depth we requested.
+**The Flaw:** The program allows us to input any number for "Max nodes" and any number for "Target depth" independently. It does not seem to check if the Max nodes we allocated are actually enough to hold the Target depth we requested.
 
 If we ask for a deep tree but only give it a tiny amount of memory, we might trigger a Resource Exhaustion or Boundary Violation error.
 
@@ -75,14 +74,16 @@ The system will try to initialize the tree, realize it has run out of allocated 
 ### Step 4: Execution
 Let's try these values against the live server.
 
-Command:
+**Command:**
+
 nc localhost 1337
 
-Our Input:
+**Our Input:**
 Enter max nodes to allocate: 10
 Enter target depth: 6
 
-The Result:
+**The Result:**
+
 [+] Initializing Memory Manager...
 
 [!] CRITICAL ALERT: MEMORY BOUNDARY VIOLATION
@@ -98,17 +99,17 @@ This challenge simulates a common class of real-world bugs known as Business Log
 
 In real applications, developers often assume users will provide logical inputs (e.g., "If they need 64 nodes, surely they will allocate 64 nodes"). Hackers exploit this trust by providing mathematically impossible or contradictory inputs to force the application into an undefined state.
 
-Key Takeaway: Always validate that user inputs are consistent with each other before processing them!
+**Key Takeaway:** Always validate that user inputs are consistent with each other before processing them!
 
 
 **How to Host This Challenge**
 If you want to try this challenge locally or host it for your friends, you can use Docker.
 
-1. Build the Image
+**1. Build the Image**
    docker build -t lnmhacks/logic_challenge .
 
-2. Run the Container
+**2. Run the Container**
    docker run -d -p 1337:5010 lnmhacks/logic_challenge
 
-3. Connect
+**3. Connect**
    nc localhost 1337
